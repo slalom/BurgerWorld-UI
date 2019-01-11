@@ -74,17 +74,29 @@ class ItemListGrid extends React.Component {
     );
   }
 
-  componentWillMount() {
-    var self = this;
-    axios.get('http://localhost:8080/api/v1/items')
-    .then(function (response) {
-      self.setState({
-        names: response.data
-      });
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+  componentDidMount() {
+    fetch("http://localhost:8080/api/v1/items")
+      .then(res => {
+        res.json();
+        console.log(res);
+      })
+      .then(
+        (result) => {
+          this.setState({
+            isLoaded: true,
+            items: result.items
+          });
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        }
+      )
   }
 }
 
