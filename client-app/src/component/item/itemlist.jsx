@@ -21,7 +21,7 @@ const styles = theme => ({
   },
 });
 
-class ItemList extends React.Component {
+class ItemListGrid extends React.Component {
   state = {
     spacing: '16',
   };
@@ -73,10 +73,23 @@ class ItemList extends React.Component {
       </Grid>
     );
   }
+
+  componentWillMount() {
+    var self = this;
+    axios.get('http://localhost:8080/api/v1/items')
+    .then(function (response) {
+      self.setState({
+        names: response.data
+      });
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
 }
 
-ItemList.propTypes = {
+ItemListGrid.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ItemList);
+export default withStyles(styles)(ItemListGrid);
