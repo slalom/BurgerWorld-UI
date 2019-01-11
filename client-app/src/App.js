@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import './App.css';
+
 import ItemList from '../src/component/item/itemlist'
 
 class App extends Component {
@@ -21,7 +23,17 @@ class App extends Component {
             Learn React
           </a>
         </header>
-        <body><ItemList></ItemList></body> 
+        <body>
+
+
+        <Router>
+        <div>
+          <Link to="/component/item">Go to Links</Link>
+          <Route path="/component/item" component={ItemList} />
+        </div>
+        </Router>
+
+        </body> 
       </div>
     );
   }
