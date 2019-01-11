@@ -21,7 +21,7 @@ const styles = theme => ({
   },
 });
 
-class GuttersGrid extends React.Component {
+class ItemList extends React.Component {
   state = {
     spacing: '16',
   };
@@ -75,8 +75,8 @@ class GuttersGrid extends React.Component {
   }
 }
 
-GuttersGrid.propTypes = {
+ItemList.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(GuttersGrid);
+export default withStyles(styles)(ItemList);
