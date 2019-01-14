@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import './App.css';
 
 import ItemList from '../src/component/item/itemlist'
+import ItemForm from '../src/component/item/itemform'
+
 
 class App extends Component {
   render() {
@@ -26,8 +28,14 @@ class App extends Component {
 
         <Router>
         <div>
-          <Link to="/component/item">Go to Links</Link>
-          <Route path="/component/item" component={ItemList} />
+          <div>
+              <Link to="/component/item">Go to Links</Link>
+              <Route path="/component/item" component={ItemList} />
+          </div>
+          <div>
+               <Link to="/component/item">Create Item</Link>
+              <Route path="/component/item" component={ItemForm} />
+            </div>
         </div>
         </Router>
 
