@@ -23,7 +23,9 @@ const styles = theme => ({
 
 class ItemListGrid extends React.Component {
   state = {
-    spacing: '16',
+    isLoaded: false,
+    error: null,
+    items: []
   };
 
   handleChange = key => (event, value) => {
@@ -34,41 +36,26 @@ class ItemListGrid extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { spacing } = this.state;
+    const { isLoaded, error, items } = this.state;
 
     return (
       <Grid container className={classes.root} spacing={16}>
         <Grid item xs={12}>
-          <Grid container className={classes.demo} justify="center" spacing={Number(spacing)}>
-            {[0, 1, 2].map(value => (
-              <Grid key={value} item>
-                <Paper className={classes.paper} />
+          <Grid container className={classes.demo} justify="center">
+            {items.map(item => (
+              <Grid container key={item.id} direction='row'>
+                <Paper className={classes.paper} >
+                  {item.id}
+                </Paper>
+                <Paper className={classes.paper} >
+                  {item.name}
+                </Paper>
+                <Paper className={classes.paper} >
+                  {item.price}
+                </Paper>
               </Grid>
             ))}
           </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Paper className={classes.control}>
-            <Grid container>
-              <Grid item>
-                <FormLabel>spacing</FormLabel>
-                <RadioGroup
-                  name="spacing"
-                  aria-label="Spacing"
-                  value={spacing}
-                  onChange={this.handleChange('spacing')}
-                  row
-                >
-                  <FormControlLabel value="0" control={<Radio />} label="0" />
-                  <FormControlLabel value="8" control={<Radio />} label="8" />
-                  <FormControlLabel value="16" control={<Radio />} label="16" />
-                  <FormControlLabel value="24" control={<Radio />} label="24" />
-                  <FormControlLabel value="32" control={<Radio />} label="32" />
-                  <FormControlLabel value="40" control={<Radio />} label="40" />
-                </RadioGroup>
-              </Grid>
-            </Grid>
-          </Paper>
         </Grid>
       </Grid>
     );
@@ -77,26 +64,25 @@ class ItemListGrid extends React.Component {
   componentDidMount() {
     fetch("http://localhost:8080/api/v1/items")
       .then(res => {
-        res.json();
-        console.log(res);
+        return res.json();
       })
-      .then(
-        (result) => {
-          this.setState({
-            isLoaded: true,
-            items: result.items
-          });
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      )
+      .then(result => {
+        console.log(result);
+        this.setState({
+          isLoaded: true,
+          items: result
+        });
+      },
+      // Note: it's important to handle errors here
+      // instead of a catch() block so that we don't swallow
+      // exceptions from actual bugs in components.
+      (error) => {
+        this.setState({
+          isLoaded: true,
+          error
+        });
+      }
+    )
   }
 }
 

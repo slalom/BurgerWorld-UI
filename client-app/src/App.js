@@ -23,8 +23,6 @@ class App extends Component {
             Learn React
           </a>
         </header>
-        <body>
-
 
         <Router>
         <div>
@@ -33,7 +31,6 @@ class App extends Component {
         </div>
         </Router>
 
-        </body> 
       </div>
     );
   }
