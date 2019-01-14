@@ -13,8 +13,8 @@ const styles = theme => ({
     flexGrow: 1,
   },
   paper: {
-    height: 140,
-    width: 100,
+    height: 50,
+    width: 400,
   },
   control: {
     padding: theme.spacing.unit * 2,

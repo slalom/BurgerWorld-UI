@@ -18,49 +18,94 @@ const styles = theme => ({
   },
 });
 
-function ItemForm(props) {
-   const { classes } = props;
+class ItemForm extends React.Component {
+ constructor(props) {
+  super(props);
+  this.state = {
+    orderId: '',
+    orderName: '',
+    orderPrice: ''
+  };
 
-  return (
-    <React.Fragment>
-      <Grid container spacing={24}>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="orderId"
-            name="orderId"
-            label="Order id"
-            fullWidth
-            autoComplete="oid"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="orderName"
-            name="orderName"
-            label="Order name"
-            fullWidth
-            autoComplete="oname"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            required
-            id="orderPrice"
-            name="orderPrice"
-            label="Order price"
-            fullWidth
-            autoComplete="oprice"
-          />
-        </Grid>
-      </Grid>
-        <Button variant="contained" color="primary" className={classes.button}>
-        Submit Order
-      </Button>
-    </React.Fragment>
+  this.saveOrder = this.saveOrder.bind(this);
 
-  );
+ }
+
+  saveOrder(e) {
+    e.preventDefault();
+    console.log(e);
+    console.log(this.state);
+
+    fetch("http://localhost:8080/api/v1/items", {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: this.state.orderId,
+        name: this.state.orderName,
+        price: this.state.orderPrice
+      })
+    });
+  }
+
+  onChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value} );
+  }
+
+  render() {
+    const { classes } = this.props;
+    const { orderId, orderName, orderPrice } = this.state;
+
+    return (
+      <React.Fragment>
+      <form onSubmit={this.saveOrder}>
+        <Grid container spacing={24}>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              required
+              id="orderId"
+              name="orderId"
+              value={orderId}
+              onChange={this.onChange}
+              label="Order id"
+              fullWidth
+              autoComplete="oid"
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              required
+              id="orderName"
+              name="orderName"
+              value={orderName}
+              onChange={this.onChange}
+              label="Order name"
+              fullWidth
+              autoComplete="oname"
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              required
+              id="orderPrice"
+              name="orderPrice"
+              value={orderPrice}
+              onChange={this.onChange}
+              label="Order price"
+              fullWidth
+              autoComplete="oprice"
+            />
+          </Grid>
+        </Grid>
+          <Button variant="contained" color="primary" className={classes.button} type="submit">
+          Submit Order
+        </Button>
+      </form>
+      </React.Fragment>
+    );
+  }
 }
 
 ItemForm.propTypes = {
