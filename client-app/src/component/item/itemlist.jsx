@@ -43,7 +43,6 @@ class ItemListGrid extends React.Component {
     };
 
   this.updateItem = this.updateItem.bind(this);
-
  }
 
   updateItem(e) {
@@ -79,10 +78,11 @@ class ItemListGrid extends React.Component {
     console.log(elementItemId);
 
     console.log(e.target.value);
+    console.log(e.target.name);
     console.log(this.state.items);
 
   var objectToAssign = {}
-  objectToAssign[e.target.name.split('--')[0]] = e.target.value;
+  objectToAssign[e.target.name.split('--')[1]] = e.target.value;
 
   console.log(objectToAssign);
 
