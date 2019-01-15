@@ -22,16 +22,16 @@ class ItemForm extends React.Component {
  constructor(props) {
   super(props);
   this.state = {
-    orderId: '',
-    orderName: '',
-    orderPrice: ''
+    itemId: '',
+    itemName: '',
+    itemPrice: ''
   };
 
-  this.saveOrder = this.saveOrder.bind(this);
+  this.saveItem = this.saveItem.bind(this);
 
  }
 
-  saveOrder(e) {
+  saveItem(e) {
     e.preventDefault();
     console.log(e);
     console.log(this.state);
@@ -43,9 +43,9 @@ class ItemForm extends React.Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        id: this.state.orderId,
-        name: this.state.orderName,
-        price: this.state.orderPrice
+        id: this.state.itemId,
+        name: this.state.itemName,
+        price: this.state.itemPrice
       })
     });
   }
@@ -56,51 +56,51 @@ class ItemForm extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { orderId, orderName, orderPrice } = this.state;
+    const { itemId, itemName, itemPrice } = this.state;
 
     return (
       <React.Fragment>
-      <form onSubmit={this.saveOrder}>
+      <form onSubmit={this.saveItem}>
         <Grid container spacing={24}>
           <Grid item xs={12} sm={6}>
             <TextField
               required
-              id="orderId"
-              name="orderId"
-              value={orderId}
+              id="itemId"
+              name="itemId"
+              value={itemId}
               onChange={this.onChange}
-              label="Order id"
+              label="Item id"
               fullWidth
-              autoComplete="oid"
+              autoComplete="iid"
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
               required
-              id="orderName"
-              name="orderName"
-              value={orderName}
+              id="itemName"
+              name="itemName"
+              value={itemName}
               onChange={this.onChange}
-              label="Order name"
+              label="Item name"
               fullWidth
-              autoComplete="oname"
+              autoComplete="iname"
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
               required
-              id="orderPrice"
-              name="orderPrice"
-              value={orderPrice}
+              id="itemPrice"
+              name="itemPrice"
+              value={itemPrice}
               onChange={this.onChange}
-              label="Order price"
+              label="Item price"
               fullWidth
-              autoComplete="oprice"
+              autoComplete="iprice"
             />
           </Grid>
         </Grid>
-          <Button variant="contained" color="primary" className={classes.button} type="submit">
-          Submit Order
+         <Button variant="contained" color="primary" className={classes.button} type="submit">
+          Submit Item
         </Button>
       </form>
       </React.Fragment>

@@ -29,7 +29,7 @@ class App extends Component {
         <Router>
         <div>
           <div>
-              <Link to="/component/item">Go to Links</Link>
+              <Link to="/component/item">Go to Items</Link>
               <Route path="/component/item" component={ItemList} />
           </div>
           <div>
