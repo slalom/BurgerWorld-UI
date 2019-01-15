@@ -46,22 +46,25 @@ class ItemListGrid extends React.Component {
  }
 
   updateItem(e) {
-    e.preventDefault();
-    this.setState({ [e.target.name]: e.target.value} );
+    //e.preventDefault();
 
-    console.log(e);
-    console.log(this.state);
+    //console.log(e);
+    //console.log(this.state);
 
-    fetch("http://localhost:8080/api/v1/items/nameid", {
+    let itemId = e.target.querySelector("#ItemId").innerHTML;
+    let itemName = e.target.querySelector("#ItemName").innerHTML;
+    let itemPrice = e.target.querySelector("#ItemPrice").innerHTML;
+
+    fetch("http://localhost:8080/api/v1/items/" + itemId, {
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        id: this.state.itemId,
-        name: this.state.itemName,
-        price: this.state.itemPrice
+        id: itemId,
+        name: itemName,
+        price: itemPrice
       })
     });
   }
@@ -106,7 +109,7 @@ class ItemListGrid extends React.Component {
               <Grid container key={item.id} direction='row'>
               <form onSubmit={this.updateItem} >
                 <TextField
-                  id="standard-multiline-static"
+                  id="ItemId"
                   label="Item Id"
                   multiline
                   rows="4"
@@ -118,7 +121,7 @@ class ItemListGrid extends React.Component {
                   margin="normal"
                 />
                 <TextField
-                  id="standard-multiline-static"
+                  id="ItemName"
                   label="Item name"
                   multiline
                   name={item.id + "--name"}
@@ -130,7 +133,7 @@ class ItemListGrid extends React.Component {
                   margin="normal"
                 />
                 <TextField
-                  id="standard-multiline-static"
+                  id="ItemPrice"
                   label="Item price"
                   multiline
                   rows="4"
