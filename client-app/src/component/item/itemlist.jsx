@@ -69,6 +69,22 @@ class ItemListGrid extends React.Component {
     });
   }
 
+deleteItem(e) {
+    console.log(e.currentTarget);
+
+    var itemToDelete = e.currentTarget.getAttribute('itemToDelete');
+    console.log(itemToDelete);
+
+    fetch("http://localhost:8080/api/v1/items/" + itemToDelete, {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    });
+  }
+
+
   handleChange = key => (event, value) => {
     this.setState({
       [key]: value,
@@ -144,7 +160,7 @@ class ItemListGrid extends React.Component {
                   className={classes.textField}
                   margin="normal"
                 />
-                <Button variant="contained" color="secondary" className={classes.button}>
+                <Button itemToDelete={item.id} variant="contained" color="secondary" className={classes.button} onClick={this.deleteItem}>
                   Delete
                 </Button>
                 <Button variant="outlined" color="primary" className={classes.button} type="submit">
