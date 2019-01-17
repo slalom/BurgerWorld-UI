@@ -124,6 +124,18 @@ deleteItem(e) {
             {items.map(item => (
               <Grid container key={item.id} direction='row'>
               <form onSubmit={this.updateItem} >
+              <TextField
+                  id="imageFileName"
+                  label="imageFileName"
+                  multiline
+                  rows="4"
+                  name={item.imageFileName}
+                  value={item.imageFileName}
+                  defaultValue={item.imageFileName}
+                  onChange={this.onChange}
+                  className={classes.textField}
+                  margin="normal"
+                />
                 <TextField
                   id="ItemId"
                   label="Item Id"
@@ -160,11 +172,8 @@ deleteItem(e) {
                   className={classes.textField}
                   margin="normal"
                 />
-                <Button itemToDelete={item.id} variant="contained" color="secondary" className={classes.button} onClick={this.deleteItem}>
-                  Delete
-                </Button>
                 <Button variant="outlined" color="primary" className={classes.button} type="submit">
-                  Update
+                  Add
                 </Button>
               </form>
 
