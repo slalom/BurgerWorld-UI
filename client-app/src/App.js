@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+
+import burger1 from './images/burger-1.png'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import './App.css';
 
@@ -9,34 +10,32 @@ import ItemForm from '../src/component/item/itemform'
 
 class App extends Component {
   render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+    //TODO: figure this out, Julio!
+    //const imgSrc = `./images/${"burger-1"}.png`;
 
-        <Router>
-        <div>
+    return (
+      
+
+    
+
+
+      <div className="App">
+        <Router>  
           <div>
-              <Link to="/component/item">Go to Items</Link>
-              <Route path="/component/item" component={ItemList} />
-          </div>
-          <div>
-               <Link to="/component/item">Create Item</Link>
-              <Route path="/component/item" component={ItemForm} />
+            <Link to="/">
+              <h1>Burger World!</h1>
+            </Link>
+            <div>
+                <Link to="/component/item">Go to Items</Link>
+                <Route path="/component/item" component={ItemList} />
             </div>
-        </div>
+            <div>
+             
+              <img src={burger1} alt="this is my fav"></img>
+                <Link to="/component/items/new">Create Item</Link>
+                <Route path="/component/items/new" component={ItemForm} />
+              </div>
+          </div>
         </Router>
 
       </div>
