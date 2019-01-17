@@ -30,7 +30,7 @@ const styles = theme => ({
   },
 });
 
-class ItemListGrid extends React.Component {
+class ItemList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -201,8 +201,8 @@ deleteItem(e) {
   }
 }
 
-ItemListGrid.propTypes = {
+ItemList.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ItemListGrid);
+export default withStyles(styles)(ItemList);
