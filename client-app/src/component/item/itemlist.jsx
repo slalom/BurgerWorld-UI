@@ -9,7 +9,7 @@ import Radio from '@material-ui/core/Radio';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-
+import GridListTile from '@material-ui/core/GridListTile'
 
 const styles = theme => ({
   root: {
@@ -27,103 +27,84 @@ const styles = theme => ({
   },
   input: {
     display: 'none',
-  },
+  }
 });
+
+
+const itemPhoto = {
+  height: '75px',
+  width: '75px'
+};
 
 class ItemList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      itemId: '',
-      itemName: '',
-      itemPrice: '',
-      isLoaded: false,
-      error: null,
+    
       items: []
     };
-
-  this.updateItem = this.updateItem.bind(this);
  }
-
-  updateItem(e) {
-    //e.preventDefault();
-
-    //console.log(e);
-    //console.log(this.state);
-
-    let itemId = e.target.querySelector("#ItemId").innerHTML;
-    let itemName = e.target.querySelector("#ItemName").innerHTML;
-    let itemPrice = e.target.querySelector("#ItemPrice").innerHTML;
-
-    fetch("http://localhost:8080/api/v1/items/" + itemId, {
-      method: 'PUT',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        id: itemId,
-        name: itemName,
-        price: itemPrice
-      })
-    });
-  }
-
-deleteItem(e) {
-    console.log(e.currentTarget);
-
-    var itemToDelete = e.currentTarget.getAttribute('itemToDelete');
-    console.log(itemToDelete);
-
-    fetch("http://localhost:8080/api/v1/items/" + itemToDelete, {
-      method: 'DELETE',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      }
-    });
-  }
-
-
-  handleChange = key => (event, value) => {
-    this.setState({
-      [key]: value,
-    });
-  };
-
-  onChange = (e) => {
-    //this.setState({ [e.target.name]: e.target.value} );
-    let elementItemId = e.target.name.split('--')[0];
-    console.log(elementItemId);
-
-    console.log(e.target.value);
-    console.log(e.target.name);
-    console.log(this.state.items);
-
-  var objectToAssign = {}
-  objectToAssign[e.target.name.split('--')[1]] = e.target.value;
-
-  console.log(objectToAssign);
-
-    this.setState((prevState, e) => ({
-        items: prevState.items.map(
-        obj => (obj.id == elementItemId ? Object.assign(obj, objectToAssign) : obj)
-      )
-    }));
-  }
 
 
   render() {
-    const { classes } = this.props;
-    const { isLoaded, error, items } = this.state;
+  
+    const { items } = this.state;
 
     return (
-      <Grid container className={classes.root} spacing={16}>
-        <Grid item xs={12}>
-          <Grid container className={classes.demo} justify="center">
-            {items.map(item => (
-              <Grid container key={item.id} direction='row'>
-              <form onSubmit={this.updateItem} >
+      <Grid container direction="row"
+      justify="center"
+      alignItems="center">
+     
+        {items.map( item => (
+        <Grid container>
+            <Grid item xs={3}>
+              <img style={itemPhoto} src={require(`../../images/${item.imageFileName}`)} alt="burger"></img>
+            </Grid>
+          <Grid item xs={3}>{item.name}</Grid>
+          <Grid item xs={3}>{item.price}</Grid>
+          <Grid item xs={3}><Button>Add</Button></Grid>
+         </Grid>
+        ))}
+
+      </Grid>
+
+    );
+  }
+
+  componentDidMount() {
+    fetch("http://localhost:8080/api/v1/items")
+      .then(res => {
+        return res.json();
+      })
+      .then(result => {
+        console.log(result);
+        this.setState({
+          isLoaded: true,
+          items: result
+        });
+      },
+      // Note: it's important to handle errors here
+      // instead of a catch() block so that we don't swallow
+      // exceptions from actual bugs in components.
+      (error) => {
+        this.setState({
+          isLoaded: true,
+          error
+        });
+      }
+    )
+  }
+}
+
+ItemList.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(ItemList);
+
+
+/*
+
               <TextField
                   id="imageFileName"
                   label="imageFileName"
@@ -175,43 +156,5 @@ deleteItem(e) {
                 <Button variant="outlined" color="primary" className={classes.button} type="submit">
                   Add
                 </Button>
-              </form>
 
-              </Grid>
-            ))}
-          </Grid>
-        </Grid>
-      </Grid>
-    );
-  }
-
-  componentDidMount() {
-    fetch("http://localhost:8080/api/v1/items")
-      .then(res => {
-        return res.json();
-      })
-      .then(result => {
-        console.log(result);
-        this.setState({
-          isLoaded: true,
-          items: result
-        });
-      },
-      // Note: it's important to handle errors here
-      // instead of a catch() block so that we don't swallow
-      // exceptions from actual bugs in components.
-      (error) => {
-        this.setState({
-          isLoaded: true,
-          error
-        });
-      }
-    )
-  }
-}
-
-ItemList.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(ItemList);
+*/
