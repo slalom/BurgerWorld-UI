@@ -1,15 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Radio from '@material-ui/core/Radio';
-import Paper from '@material-ui/core/Paper';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import GridListTile from '@material-ui/core/GridListTile'
+
+
+
+
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+
 
 const styles = theme => ({
   root: {
@@ -40,36 +42,63 @@ class ItemList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-    
+      order: [],
       items: []
     };
- }
 
+   // this.addItem = this.addItem.bind(this);
+ }
+  
+
+  addItem(item) {
+    this.state.order.push(item);
+    localStorage.setItem("order", JSON.stringify(this.state.order));
+    //this.forceUpdate();
+  }
 
   render() {
   
     const { items } = this.state;
 
     return (
-      <Grid container direction="row"
-      justify="center"
-      alignItems="center">
-     
-        {items.map( item => (
-        <Grid container>
-            <Grid item xs={3}>
-              <img style={itemPhoto} src={require(`../../images/${item.imageFileName}`)} alt="burger"></img>
-            </Grid>
-          <Grid item xs={3}>{item.name}</Grid>
-          <Grid item xs={3}>{item.price}</Grid>
-          <Grid item xs={3}><Button>Add</Button></Grid>
-         </Grid>
-        ))}
 
-      </Grid>
+      <div>
+        <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Id</TableCell>
+            <TableCell align="right"></TableCell>
+            <TableCell align="right">Name</TableCell>
+            <TableCell align="right">Price</TableCell>
+            <TableCell align="right"></TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {items.map(item => (
+            <TableRow key={item.id}>
+              <TableCell component="th" scope="row">
+                Going to be ID
+              </TableCell>
+              <TableCell align="right"><img style={itemPhoto} src={require(`../../images/${item.imageFileName}`)} alt="burger"></img></TableCell>
+              <TableCell align="right">{item.name}</TableCell>
+              <TableCell align="right">{item.price}</TableCell>
+              <TableCell align="right"><Button onClick={this.addItem.bind(this, item)}>Add</Button></TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
 
+      <div>
+              {this.state.order.map(item =>
+                <div>{item.name}</div>
+                )}
+      </div>
+    </div>
+
+   
     );
   }
+  //() => this.handleSort(column)}
 
   componentDidMount() {
     fetch("http://localhost:8080/api/v1/items")
