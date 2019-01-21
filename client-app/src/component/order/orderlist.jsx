@@ -25,16 +25,21 @@ class OrderList extends React.Component {
   }
 
   componentDidUpdate() {
-      //TODO: We may need this when we implement the Remove
+    //TODO: We may need this when we implement the Remove
   }
   
   updateOrderTotal() {
     var totalPrice = 0;
     this.state.order.map(item => totalPrice+=item.price);
+    localStorage.setItem("order", JSON.stringify(this.state.order));
     this.setState({total:totalPrice});
   }
+
   removeItem(item) {
-    //TODO: Implement
+    var indexOfItem = this.state.order.map(function(e) { return e.id; }).indexOf(item.id);
+    this.state.order.splice(indexOfItem, 1);
+    this.setState({order: this.state.order});
+    this.updateOrderTotal();
   }
 
   render() {
