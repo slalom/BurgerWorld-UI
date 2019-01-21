@@ -36,11 +36,19 @@ class ItemList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      order: [],
+      order: this.loadExistingOrder() ,
       items: []
     };
   }
 
+  loadExistingOrder() {
+    var existingOrder = [];
+    if(localStorage.getItem("order") != null) {
+      existingOrder = JSON.parse(localStorage.getItem("order"))
+    }
+
+    return existingOrder;
+  }
   addItem(item) {
     this.state.order.push(item);
     this.setState({ order: this.state.order })

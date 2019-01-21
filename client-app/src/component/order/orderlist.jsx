@@ -19,6 +19,20 @@ class OrderList extends React.Component {
       total: 0
     };
   }
+
+  componentDidMount() {
+    this.updateOrderTotal();
+  }
+
+  componentDidUpdate() {
+      //TODO: We may need this when we implement the Remove
+  }
+  
+  updateOrderTotal() {
+    var totalPrice = 0;
+    this.state.order.map(item => totalPrice+=item.price);
+    this.setState({total:totalPrice});
+  }
   removeItem(item) {
     //TODO: Implement
   }
@@ -37,7 +51,6 @@ class OrderList extends React.Component {
           </TableHead>
           <TableBody>
             {this.state.order.map(item => (
-              this.state.total += item.price,
               <TableRow>
                 <TableCell align="right"><img style={itemPhoto} src={require(`../../images/${item.imageFileName}`)} alt="burger"></img></TableCell>
                 <TableCell align="right">{item.name}</TableCell>
