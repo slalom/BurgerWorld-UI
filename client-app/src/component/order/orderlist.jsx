@@ -11,6 +11,10 @@ const itemPhoto = {
   width: '75px'
 };
 
+const placeOrderButton = {
+  float: 'right'
+};
+
 class OrderList extends React.Component {
   constructor(props) {
     super(props);
@@ -22,10 +26,6 @@ class OrderList extends React.Component {
 
   componentDidMount() {
     this.updateOrderTotal();
-  }
-
-  componentDidUpdate() {
-    //TODO: We may need this when we implement the Remove
   }
   
   updateOrderTotal() {
@@ -40,6 +40,10 @@ class OrderList extends React.Component {
     this.state.order.splice(indexOfItem, 1);
     this.setState({order: this.state.order});
     this.updateOrderTotal();
+  }
+
+  placeOrder(){
+
   }
 
   render() {
@@ -66,7 +70,7 @@ class OrderList extends React.Component {
             }
           </TableBody>
         </Table>
-        <span>Total: {this.state.total}</span>
+        <span>Total: {this.state.total}</span><span><Button onClick={this.placeOrder} style={placeOrderButton}>Place Order</Button></span>
       </div>
     )
   }
