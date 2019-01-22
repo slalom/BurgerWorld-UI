@@ -64,7 +64,7 @@ class OrderList extends React.Component {
                 <TableCell align="right"><img style={itemPhoto} src={require(`../../images/${item.imageFileName}`)} alt="burger"></img></TableCell>
                 <TableCell align="right">{item.name}</TableCell>
                 <TableCell align="right">{item.price}</TableCell>
-                <TableCell align="right"><Button onClick={this.removeItem.bind(this, item)}>Remove</Button></TableCell>
+                <TableCell align="right"><Button onClick={() => this.removeItem(item)}>Remove</Button></TableCell>
               </TableRow>
             ))
             }

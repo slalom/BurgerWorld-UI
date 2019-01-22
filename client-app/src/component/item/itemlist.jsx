@@ -73,7 +73,7 @@ class ItemList extends React.Component {
                 <TableCell align="right"><img style={itemPhoto} src={require(`../../images/${item.imageFileName}`)} alt="burger"></img></TableCell>
                 <TableCell align="right">{item.name}</TableCell>
                 <TableCell align="right">{item.price}</TableCell>
-                <TableCell align="right"><Button onClick={this.addItem.bind(this, item)}>Add</Button></TableCell>
+                <TableCell align="right"><Button onClick={() => this.addItem(item)}>Add</Button></TableCell>
               </TableRow>
             ))}
           </TableBody>
