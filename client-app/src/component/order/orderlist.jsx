@@ -5,6 +5,28 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+//import productorder from './model/productorder';
+//import orderLineItem from './model/orderLineItem';
+import { array } from 'prop-types';
+
+class orderLineItem {
+  constructor(id, name, price, quantity) {
+      this.id = id;
+      this.name = name;
+      this.price = price;
+      this.quantity = quantity;
+  }
+}
+
+class productOrder {
+  constructor(id, poNumber, customerName, orderDate, orderLineItems) {
+      this.id = id;
+      this.poNumber = poNumber;
+      this.customerName = customerName;
+      this.orderDate = orderDate;
+      this.orderLineItems = orderLineItems;
+  }
+}
 
 const itemPhoto = {
   height: '75px',
@@ -22,6 +44,7 @@ class OrderList extends React.Component {
       order: JSON.parse(localStorage.getItem("order")),
       total: 0
     };
+    this.placeOrder = this.placeOrder(this);
   }
 
   componentDidMount() {
@@ -43,7 +66,26 @@ class OrderList extends React.Component {
   }
 
   placeOrder(){
+    var id = "";
+    var poNumber = "";
+    var customerName = "Hard-coded CustomerName";
+    var orderDate = Date.now();
+    var quantity = 1; //TODO: this is hard-coded for now, need to compute this
+    var orderLineItems = array[orderLineItem];
+    orderLineItems = this.state.order.map(item => new orderLineItem(item.id, item.name, item.price, quantity) );
+    
+    let po = new productOrder(id, poNumber, customerName, orderDate, orderLineItems);
 
+    fetch("http://localhost:8080/api/v1/productorder", {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        po
+      })
+    });
   }
 
   render() {
